@@ -13,7 +13,7 @@ rustup update
 #### install cargo-update
 
 ```bash
-cargo install cargo-update
+cargo install cargo update
 ```
 
 #### Self-update of cargo-update
@@ -21,14 +21,17 @@ cargo install cargo-update
 - cargo-update will update itself seamlessly on Linux and Windows.
 
 ```bash
-cargo-update
+cargo update
 ```
 
 #### update all extension
 
 ```bash
-cargo install-update -a
+cargo install update -- -a
 ```
+
+- error: there is nothing to install in `update v0.0.0`, because it has no binaries
+Where there is nothing, nothing can be updated
 
 ### check all necessary plugins installed
 
@@ -62,8 +65,6 @@ back to stable
 rustup override set stable
 ```
 
-
-
 ## simplest testcase for ```rust fn main()```
 
 - we would to [use assert_cmd](https://crates.io/crates/assert_cmd)
@@ -93,3 +94,5 @@ fn cargo_binary() {
 
 EoF
 ```
+
+[marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
