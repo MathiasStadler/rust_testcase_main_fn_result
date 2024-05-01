@@ -39,9 +39,9 @@ Where there is nothing, nothing can be updated
 ls -la  ~/.cargo/bin/
 ```
 
-### check is cargo-edit
+### check cargo-edit
 
-#### is already installed
+#### check is already installed and with which version
 
 ```bash
 cargo install --list |grep cargo-edit
@@ -55,11 +55,19 @@ cargo install cargo-edit
 
 ## rust switch from stable to nightly and back [found here](https://stackoverflow.com/questions/58226545/how-to-switch-between-rust-toolchains)
 
+### which version is on start
+
+```bash
+rustc --version
+```
+
+### switch to nightly
+
 ```bash
 rustup override set nightly
 ```
 
-back to stable
+### switch to stable
 
 ```bash
 rustup override set stable
@@ -67,13 +75,13 @@ rustup override set stable
 
 ## simplest testcase for ```rust fn main()```
 
-- we would to [use assert_cmd](https://crates.io/crates/assert_cmd)
--- [modified this example - first testcase](https://github.com/assert-rs/assert_cmd/blob/master/tests/cargo.rs)
+- we would to use [assert_cmd](https://crates.io/crates/assert_cmd)
+-- modified this example - [first testcase](https://github.com/assert-rs/assert_cmd/blob/master/tests/cargo.rs)
 
--add assert_cmd crate to project
+### add assert_cmd crate to project
 
 ```bash
-cargo add cargo add assert_cmd
+cargo add assert_cmd
 ```
 
 ```rust
@@ -94,5 +102,7 @@ fn cargo_binary() {
 
 EoF
 ```
+
+## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
 
 [marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
