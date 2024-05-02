@@ -1,7 +1,7 @@
 # Explore Rust TestCase for cli main function,  fn, strut and result
 
 <details>
-<summary>## Usefully thing</summary>
+<summary>Usefully thing</summary>
 
 [Update the local rust/cargo installation to the newest/latest version](https://github.com/MathiasStadler/repo_template/blob/main/includes/local_update_rust_env.md)
 
