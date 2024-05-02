@@ -90,14 +90,15 @@ cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 use assert_cmd::Command;
 
 fn main() {
-   let mut input = String::new();
-match std::io::stdin().read_line(&mut input) {
-    Ok(n) => {
-        println!("{n} bytes read");
-        println!("{input}");
+    let mut input = String::new();
+    match std::io::stdin().read_line(&mut input) {
+        #[allow(unused_variables)]
+        Ok(n) => {
+            // println!("{n} bytes read");
+            println!("{input}");
+        }
+        Err(error) => println!("error: {error}"),
     }
-    Err(error) => println!("error: {error}"),
-}
 }
 
 // stdin testcase
