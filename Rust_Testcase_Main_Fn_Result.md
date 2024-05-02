@@ -1,6 +1,7 @@
 # Explore RustTestcase MainFn Result
 
 <details>
+    <summary>Update local rust/cargo env to newest stand</summary>
 
 ## project setup for easy to used
 
@@ -80,6 +81,8 @@ rustup override set nightly
 ```bash
 rustup override set stable
 ```
+
+</details>
 
 ## we use crate assert_cmd
 
