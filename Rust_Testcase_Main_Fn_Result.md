@@ -107,13 +107,13 @@ fn main() {
 
 #[test]
 fn cargo_binary() {
-    let mut cmd = process::Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
+    let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
     cmd.assert().success().stdout("Hello, world!\n");
 }
 
 /*
-export FILE_NAME=$EXAMPLE_SCRIPT_FILE
-export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
 git add \$FILE_DIR_NAME/\$FILE_NAME
 git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 # git push
