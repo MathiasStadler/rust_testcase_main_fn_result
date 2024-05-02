@@ -99,7 +99,7 @@ export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 #[allow(unused_imports)]
 use assert_cmd::Command;
-use std::process::Command;
+
 
 fn main() {
     println!("Hello, world!");
