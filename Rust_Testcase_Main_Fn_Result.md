@@ -79,7 +79,7 @@ rustup override set nightly
 rustup override set stable
 ```
 
-## simplest testcase for ```rust fn main()```
+## we use crate assert_cmd
 
 - we would to use [assert_cmd](https://crates.io/crates/assert_cmd)
 -- modified this example - [first testcase](https://github.com/assert-rs/assert_cmd/blob/master/tests/cargo.rs)
@@ -90,7 +90,7 @@ rustup override set stable
 cargo add assert_cmd
 ```
 
-### first simplest testcase - hello world
+## simplest testcase - hello world
 
 ```rust
 #!/usr/bin/env bash
@@ -99,7 +99,6 @@ export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 #[allow(unused_imports)]
 use assert_cmd::Command;
-
 
 fn main() {
     println!("Hello, world!");
@@ -139,8 +138,82 @@ echo "ReturnCode => \$?"
 */
 
 EoF
+```
 
+## testcase main run
 
+```rust
+#!/usr/bin/env bash
+export SCRIPT_FILE="02_testcase_main_run.rs"
+export SCRIPT_DIR="examples/"
+cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+// FROM HERE
+// https://raw.githubusercontent.com/assert-rs/assert_cmd/master/examples/example_fixture.rs
+
+#![allow(clippy::exit)]
+
+use std::env;
+use std::error::Error;
+use std::io;
+use std::io::Write;
+use std::process;
+
+fn run() -> Result<(), Box<dyn Error>> {
+    if let Ok(text) = env::var("stdout") {
+        println!("{}", text);
+    }
+    if let Ok(text) = env::var("stderr") {
+        eprintln!("{}", text);
+    }
+
+    let code = env::var("exit")
+        .ok()
+        .map(|v| v.parse::<i32>())
+        .map(|r| r.map(Some))
+        .unwrap_or(Ok(None))?
+        .unwrap_or(0);
+    process::exit(code);
+}
+
+fn main() {
+    let code = match run() {
+        Ok(_) => 0,
+        Err(ref e) => {
+            write!(&mut io::stderr(), "{}", e).expect("writing to stderr won't fail");
+            1
+        }
+    };
+    process::exit(code);
+}
+
+/*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+git add \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+# git push
+# cargo install --list
+# cargo update --workspace
+cargo clippy --fix
+cargo clippy --fix --examples
+# cargo check --verbose
+# cargo check --verbose --examples
+cargo check
+cargo check --examples
+cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+git push
+echo "";
+echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "ReturnCode => \$?"
+*/
+
+EoF
 ```
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
