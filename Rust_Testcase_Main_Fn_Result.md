@@ -90,25 +90,53 @@ rustup override set stable
 cargo add assert_cmd
 ```
 
-### first simplest testcase
+### first simplest testcase - hello world
 
 ```rust
 #!/usr/bin/env bash
-export EXAMPLE_SCRIPT_FILE="01_simplest_testcase.rs"
-export EXAMPLE_SCRIPT_DIR="examples/"
-cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+export SCRIPT_FILE="01_testcase_hello_world.rs"
+export SCRIPT_DIR="examples/"
+cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+#[allow(unused_imports)]
+use assert_cmd::Command;
+use std::process::Command;
+
 fn main() {
     println!("Hello, world!");
 }
 
 #[test]
 fn cargo_binary() {
-    let mut cmd = process::Command::cargo_bin("bin_fixture").unwrap();
-    cmd.env("stdout", "42");
-    cmd.assert().success().stdout("42\n");
+    let mut cmd = process::Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
+    cmd.assert().success().stdout("Hello, world!\n");
 }
 
+/*
+export FILE_NAME=$EXAMPLE_SCRIPT_FILE
+export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+git add \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+# git push
+# cargo install --list
+# cargo update --workspace
+cargo clippy --fix
+cargo clippy --fix --examples
+# cargo check --verbose
+# cargo check --verbose --examples
+cargo check
+cargo check --examples
+cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+git push
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+# rust test
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
+*/
+
 EoF
+
+
 ```
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)

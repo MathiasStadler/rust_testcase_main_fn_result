@@ -1,12 +1,14 @@
+#[allow(unused_imports)]
+use assert_cmd::Command;
 fn main() {
     println!("Hello, world!");
 }
 
 #[test]
 fn cargo_binary() {
-    let mut cmd = process::Command::cargo_bin("bin_fixture").unwrap();
-    cmd.env("stdout", "42");
-    cmd.assert().success().stdout("42\n");
+    let mut cmd = Command::cargo_bin("01_simplest_testcase").unwrap();
+    // cmd.env("stdout", "42");
+    cmd.assert().success().stdout("Hello, world!\n");
 }
 
 /*
@@ -27,5 +29,8 @@ cargo fmt -- --emit=files $FILE_DIR_NAME/$FILE_NAME
 git commit --all --message="-> Add AFTER housekeeping => $FILE_DIR_NAME/$FILE_NAME"
 git push
 cargo run --example "$(echo $FILE_NAME | cut -d . -f 1)"
+# rust test
+cargo test --example "$(echo $FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => $?"
 */
+
