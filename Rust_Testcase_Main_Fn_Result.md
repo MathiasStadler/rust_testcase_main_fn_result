@@ -140,11 +140,82 @@ echo "ReturnCode => \$?"
 EoF
 ```
 
+## testcase stdout and return_code
+
+```rust
+#!/usr/bin/env bash
+export SCRIPT_FILE="02_testcase_stdin_stdout_return_code.rs"
+export SCRIPT_DIR="examples/"
+cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+// FROM HERE
+// https://doc.rust-lang.org/std/io/struct.Stdin.html
+
+// stdin
+// https://docs.rs/assert_cmd/latest/assert_cmd/
+#[allow(unused_imports)]
+use assert_cmd::Command;
+
+fn main() {
+   let mut input = String::new();
+match std::io::stdin().read_line(&mut input) {
+    Ok(n) => {
+        println!("{n} bytes read");
+        println!("{input}");
+    }
+    Err(error) => println!("error: {error}"),
+}
+}
+
+// stdin testcase
+// https://docs.rs/assert_cmd/latest/assert_cmd/
+#[test]
+fn cargo_binary() {
+    let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
+    // cmd.assert().success().stdout("Hello, world!\n");
+    let assert = cmd
+    .write_stdin("standard_in_str")
+    .assert();
+    assert
+    .success()
+    .code(0)
+    .stdout("standard_in_str\n");
+}
+
+/*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+git add \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+# git push
+# cargo install --list
+# cargo update --workspace
+cargo clippy --fix
+cargo clippy --fix --examples
+# cargo check --verbose
+# cargo check --verbose --examples
+cargo check
+cargo check --examples
+cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+git push
+echo "";
+echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "ReturnCode => \$?"
+*/
+
+EoF
+```
+
 ## testcase main run
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="02_testcase_main_run.rs"
+export SCRIPT_FILE="03_testcase_main_run.rs"
 export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // FROM HERE
