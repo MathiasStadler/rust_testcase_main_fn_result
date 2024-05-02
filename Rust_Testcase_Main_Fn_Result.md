@@ -1,6 +1,6 @@
 # Explore Rust TestCase for cli main function,  fn, strut and result
 
-[Update the local rust/cargo installation to the newest/latest version](https://raw.githubusercontent.com/MathiasStadler/repo_template/main/includes/local_update_rust_env.md)
+[Update the local rust/cargo installation to the newest/latest version](https://github.com/MathiasStadler/repo_template/blob/main/includes/local_update_rust_env.md)
 
 <details>
     <summary>Update local rust/cargo env to newest stand</summary>
