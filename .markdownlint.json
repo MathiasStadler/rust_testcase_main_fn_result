@@ -1,0 +1,8 @@
+{
+    "default": true,
+    "MD024": false,
+    "MD033": false,
+    "MD013":false
+}
+
+// {"FROM HER":"https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md"}

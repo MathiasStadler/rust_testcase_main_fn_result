@@ -1,5 +1,7 @@
 # Explore RustTestcase MainFn Result
 
+<details>
+
 ## project setup for easy to used
 
 ### update rust of latest stable version
@@ -202,7 +204,8 @@ echo "";
 echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
 cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
-echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+# DISABLE =>  because this testcase need keyboard input
+# echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "ReturnCode => \$?"
