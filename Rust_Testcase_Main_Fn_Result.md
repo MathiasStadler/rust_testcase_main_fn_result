@@ -134,8 +134,9 @@ cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
 git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 git push
 echo "";
-echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
-cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+# **DISABLE BY HAND** because this program use manually input from user
+# echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+# cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 # DISABLE =>  because this testcase need keyboard input
 # echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
