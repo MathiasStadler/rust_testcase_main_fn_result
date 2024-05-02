@@ -29,4 +29,3 @@ git push
 cargo run --example "$(echo $FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => $?"
 */
-
