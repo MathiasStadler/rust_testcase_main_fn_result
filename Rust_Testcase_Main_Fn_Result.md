@@ -53,9 +53,15 @@ cargo install --list |grep cargo-edit
 cargo install cargo-edit
 ```
 
+#### update any packages of project
+
+```bash
+cargo update
+```
+
 ## rust switch from stable to nightly and back [found here](https://stackoverflow.com/questions/58226545/how-to-switch-between-rust-toolchains)
 
-### which version is on start
+### find out which version is on start
 
 ```bash
 rustc --version
@@ -83,6 +89,8 @@ rustup override set stable
 ```bash
 cargo add assert_cmd
 ```
+
+### first simplest testcase
 
 ```rust
 #!/usr/bin/env bash
