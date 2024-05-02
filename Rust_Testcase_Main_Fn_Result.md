@@ -1,6 +1,17 @@
 # Explore Rust TestCase for cli main function,  fn, strut and result
 
+<details>
+<summary>## Usefully thing</summary>
+
 [Update the local rust/cargo installation to the newest/latest version](https://github.com/MathiasStadler/repo_template/blob/main/includes/local_update_rust_env.md)
+
+[Extract all rust code block from markdown file](https://github.com/MathiasStadler/repo_template/blob/main/includes/extract__scripts_from_markdown.md)
+
+[Markdown marker](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
+
+[Markdown template rust codeblock](https://github.com/MathiasStadler/repo_template/blob/main/includes/dummy_rust_codeblock.md)
+
+</details>
 
 ## we use crate assert_cmd
 
@@ -219,4 +230,4 @@ EoF
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
 
-[marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
+[Markdown marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
