@@ -128,9 +128,13 @@ cargo check --examples
 cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
 git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 git push
+echo "";
+echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
 cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-# rust test
+echo "";
+echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
 echo "ReturnCode => \$?"
 */
 
