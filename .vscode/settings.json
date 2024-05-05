@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "eprintln",
+        "nocapture",
         "println",
         "rustc"
     ]

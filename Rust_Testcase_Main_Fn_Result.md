@@ -150,11 +150,18 @@ echo "";
 # echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
 # cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
+# instead make only a build
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
 # DISABLE =>  because this testcase need keyboard input
 # echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "ReturnCode => \$?"
+*/
+
+/* run oncommand line
+cargo test --package rust_testcase_main_fn_result --example 02_testcase_stdin_stdout -- testcase_stdin_stdout_success --exact --show-output --nocapture
 */
 
 EoF
