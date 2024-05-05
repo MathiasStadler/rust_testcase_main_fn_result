@@ -78,7 +78,7 @@ EoF
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="02_testcase_stdin_stdout_return_code.rs"
+export SCRIPT_FILE="02_testcase_stdin_stdout.rs"
 export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // FROM HERE
@@ -104,16 +104,28 @@ fn main() {
 // stdin testcase
 // https://docs.rs/assert_cmd/latest/assert_cmd/
 #[test]
-fn cargo_binary() {
+fn testcase_stdin_stdout_success() {
     let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
     // cmd.assert().success().stdout("Hello, world!\n");
     let assert = cmd
-    .write_stdin("standard_in_str")
+    .write_stdin("std_in_str")
     .assert();
     assert
     .success()
     .code(0)
-    .stdout("standard_in_str\n");
+    .stdout("std_in_str\n");
+}
+
+#[test]
+fn testcase_stdin_stdout_failure() {
+    let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
+    let assert = cmd
+    .write_stdin("std_in_str")
+    .assert();
+    assert
+    .failure()
+    .code(0)
+    .stdout("failed_std_in_str\n");
 }
 
 /*
