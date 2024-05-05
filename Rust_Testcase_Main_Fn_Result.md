@@ -167,18 +167,68 @@ cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME 
 EoF
 ```
 
-## testcase stdout and return_code
+## testcase return_code
 
 > [FROM HERE](https://stackoverflow.com/questions/43390971/how-to-check-the-exit-code-from-stdprocessexit-in-tests)
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="02_testcase_stdin_stdout.rs"
+export SCRIPT_FILE="03_testcase_return_code.rs"
 export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+
+fn main(){
+
+    std::process::exit(0)
+}
+
+#[test]
+fn test_main_return_code_success(){
+    let status = std::process::Command::new("$(echo $SCRIPT_FILE | cut -d . -f 1)")
+        // .args(&["--ignored", "real"])
+        .status()
+        .expect("Unable to run program");
+
+    assert_eq!(Some(0), status.code());
+}
+
+/*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+git add \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+# git push
+# cargo install --list
+# cargo update --workspace
+cargo clippy --fix
+cargo clippy --fix --examples
+# cargo check --verbose
+# cargo check --verbose --examples
+cargo check
+cargo check --examples
+cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
+git push
+echo "";
+# **DISABLE BY HAND** because this program use manually input from user
+# echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+# cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+# instead make only a build
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+# DISABLE =>  because this testcase need keyboard input
+# echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "ReturnCode => \$?"
+*/
+
+/* run oncommand line
+cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
+*/
 EoF
 ```
-
 
 ## testcase main run
 
