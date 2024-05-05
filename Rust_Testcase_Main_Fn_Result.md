@@ -176,7 +176,8 @@ EoF
 export SCRIPT_FILE="03_testcase_return_code.rs"
 export SCRIPT_DIR="examples/"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
-
+//https://doc.rust-lang.org/std/process/struct.ExitCode.html
+//fn main() -> ExitCode {
 fn main(){
 
     std::process::exit(0)
