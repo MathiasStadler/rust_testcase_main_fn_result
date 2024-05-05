@@ -74,7 +74,7 @@ echo "ReturnCode => \$?"
 EoF
 ```
 
-## testcase stdout and return_code
+## testcase stdout
 
 ```rust
 #!/usr/bin/env bash
@@ -161,11 +161,24 @@ echo "ReturnCode => \$?"
 */
 
 /* run oncommand line
-cargo test --package rust_testcase_main_fn_result --example 02_testcase_stdin_stdout -- testcase_stdin_stdout_success --exact --show-output --nocapture
+cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
 */
 
 EoF
 ```
+
+## testcase stdout and return_code
+
+> [FROM HERE](https://stackoverflow.com/questions/43390971/how-to-check-the-exit-code-from-stdprocessexit-in-tests)
+
+```rust
+#!/usr/bin/env bash
+export SCRIPT_FILE="02_testcase_stdin_stdout.rs"
+export SCRIPT_DIR="examples/"
+cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+EoF
+```
+
 
 ## testcase main run
 
