@@ -5,7 +5,7 @@
 
 [Update the local rust/cargo installation to the newest/latest version](https://github.com/MathiasStadler/repo_template/blob/main/includes/local_update_rust_env.md)
 
-[Extract all rust code block from markdown file](https://github.com/MathiasStadler/repo_template/blob/main/includes/extract__scripts_from_markdown.md)
+[Extract all code block from markdown with rust](https://github.com/MathiasStadler/repo_template/blob/main/includes/extract__scripts_from_markdown.md)
 
 [Markdown marker](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
 
@@ -162,7 +162,7 @@ echo "";
 echo "ReturnCode => \$?"
 */
 
-/* run oncommand line
+/* run testcase from bash based command prompt
 cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
 */
 
@@ -177,6 +177,7 @@ EoF
 #!/usr/bin/env bash
 export SCRIPT_FILE="03_testcase_return_code.rs"
 export SCRIPT_DIR="examples/"
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result"
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // First hint/approach
 //https://doc.rust-lang.org/std/process/struct.ExitCode.html
@@ -214,7 +215,8 @@ io::stdout().write_all(&output.stdout).unwrap();
 io::stderr().write_all(&output.stderr).unwrap();
 
 }
-
+// FROM HERE - testcase - - should panic
+// https://doc.rust-lang.org/rust-by-example/testing/unit_testing.html#testing-panics
 #[test]
 #[should_panic(expected = "ExitStatus(unix_wait_status(256))")]
 fn test_main_return_code_failure(){
@@ -233,6 +235,7 @@ io::stderr().write_all(&output.stderr).unwrap();
 /*
 export FILE_NAME=$SCRIPT_FILE
 export FILE_DIR_NAME=$SCRIPT_DIR
+export SCRIPT_PACKAGE=$SCRIPT_PACKAGE
 git add \$FILE_DIR_NAME/\$FILE_NAME
 git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 # git push
@@ -265,7 +268,7 @@ echo "ReturnCode => \$?"
 */
 
 /* run oncommand line
-cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
+cargo test --package \$SCRIPT_PACKAGE --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
 */
 
 EoF
