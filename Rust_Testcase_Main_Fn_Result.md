@@ -203,6 +203,7 @@ git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE
 # cargo update --workspace
 cargo clippy --fix
 cargo clippy --fix --examples
+cargo  clippy --fix --examples --all-features
 cargo  clippy --fix --examples --all-features  -- -Dwarnings
 # cargo check --verbose
 # cargo check --verbose --examples
