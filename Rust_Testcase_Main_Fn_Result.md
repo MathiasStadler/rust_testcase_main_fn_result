@@ -117,6 +117,7 @@ fn testcase_stdin_stdout_success() {
 }
 
 #[test]
+#[should_panic(expected = "Unexpected success")]
 fn testcase_stdin_stdout_failure() {
     let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
     let assert = cmd
