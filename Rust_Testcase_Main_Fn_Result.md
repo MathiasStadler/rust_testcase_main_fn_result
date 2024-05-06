@@ -138,6 +138,8 @@ git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE
 # cargo update --workspace
 cargo clippy --fix
 cargo clippy --fix --examples
+cargo  clippy --fix --examples --all-features
+cargo  clippy --fix --examples --all-features  -- -Dwarnings
 # cargo check --verbose
 # cargo check --verbose --examples
 cargo check
@@ -200,7 +202,7 @@ process::exit(0);
 }
 
 #[test]
-fn test_main_return_code_succes(){
+fn test_main_return_code_success(){
     let output = Command::new("/bin/cat")
     .arg("/etc/os-release")
     .output()
@@ -214,6 +216,7 @@ io::stderr().write_all(&output.stderr).unwrap();
 }
 
 #[test]
+#[should_panic(expected = "ExitStatus(unix_wait_status(256))")]
 fn test_main_return_code_failure(){
     let output = Command::new("/bin/cat")
     .arg("/tmp/not_available_file.txt")
@@ -228,10 +231,10 @@ io::stderr().write_all(&output.stderr).unwrap();
 }
 
 /*
-export FILE_NAME=03_testcase_return_code.rs
-export FILE_DIR_NAME=examples/
-git add $FILE_DIR_NAME/$FILE_NAME
-git commit --all --message="-> Add BEFORE housekeeping => $FILE_DIR_NAME/$FILE_NAME"
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+git add \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add BEFORE housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 # git push
 # cargo install --list
 # cargo update --workspace
@@ -243,26 +246,26 @@ cargo  clippy --fix --examples --all-features  -- -Dwarnings
 # cargo check --verbose --examples
 cargo check
 cargo check --examples
-cargo fmt -- --emit=files $FILE_DIR_NAME/$FILE_NAME
-git commit --all --message="-> Add AFTER housekeeping => $FILE_DIR_NAME/$FILE_NAME"
+cargo fmt -- --emit=files \$FILE_DIR_NAME/\$FILE_NAME
+git commit --all --message="-> Add AFTER housekeeping => \$FILE_DIR_NAME/\$FILE_NAME"
 git push
 echo "";
 # **DISABLE BY HAND** because this program use manually input from user
-# echo "run rust PRG => $(echo $FILE_NAME | cut -d . -f 1)";
-# cargo run --example "$(echo $FILE_NAME | cut -d . -f 1)"
+# echo "run rust PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+# cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 # instead make only a build
-cargo build --example "$(echo $FILE_NAME | cut -d . -f 1)"
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 # DISABLE =>  because this testcase need keyboard input
-# echo "run rust TEST => $(echo $FILE_NAME | cut -d . -f 1)"
-cargo test --example "$(echo $FILE_NAME | cut -d . -f 1)"
+# echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
-echo "ReturnCode => $?"
+echo "ReturnCode => \$?"
 */
 
 /* run oncommand line
-cargo test --package rust_testcase_main_fn_result --example $(echo $FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
+cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
 */
 
 EoF
