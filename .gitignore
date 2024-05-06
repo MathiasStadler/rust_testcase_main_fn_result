@@ -1,4 +1,5 @@
 /target
 /examples/*rs
 /utilities/*sh
+/run_examples/*rs
 
