@@ -28,8 +28,11 @@ cargo add assert_cmd
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="01_testcase_hello_world.rs"
-export SCRIPT_DIR="examples/"
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result";
+export SCRIPT_FILE="01_testcase_hello_world.rs";
+export SCRIPT_DIR="examples/";
+# make dir if not available
+mkdir -p ./$SCRIPT_DIR;
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 #[allow(unused_imports)]
 use assert_cmd::Command;
@@ -45,6 +48,7 @@ fn cargo_binary() {
 }
 
 /*
+export SCRIPT_PACKAGE=$SCRIPT_PACKAGE
 export FILE_NAME=$SCRIPT_FILE
 export FILE_DIR_NAME=$SCRIPT_DIR
 git add \$FILE_DIR_NAME/\$FILE_NAME
@@ -67,8 +71,11 @@ cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-echo "";
 echo "ReturnCode => \$?"
+*/
+
+/* run testcase from bash based command prompt
+cargo test --package "\$SCRIPT_PACKAGE" --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -78,8 +85,11 @@ EoF
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="02_testcase_stdin_stdout.rs"
-export SCRIPT_DIR="examples/"
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result";
+export SCRIPT_FILE="02_testcase_stdin_stdout.rs";
+export SCRIPT_DIR="examples/";
+# make dir if not available
+mkdir -p ./$SCRIPT_DIR;
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // FROM HERE
 // https://doc.rust-lang.org/std/io/struct.Stdin.html
@@ -130,6 +140,7 @@ fn testcase_stdin_stdout_failure() {
 }
 
 /*
+export SCRIPT_PACKAGE=$SCRIPT_PACKAGE
 export FILE_NAME=$SCRIPT_FILE
 export FILE_DIR_NAME=$SCRIPT_DIR
 git add \$FILE_DIR_NAME/\$FILE_NAME
@@ -159,12 +170,12 @@ echo "";
 # DISABLE =>  because this testcase need keyboard input
 # echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-echo "";
 echo "ReturnCode => \$?"
 */
 
-/* run testcase from bash based command prompt
-cargo test --package rust_testcase_main_fn_result --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
+/* 
+# run testcase from bash based command prompt
+cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -176,9 +187,11 @@ EoF
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="03_testcase_return_code.rs"
-export SCRIPT_DIR="examples/"
-export SCRIPT_PACKAGE="rust_testcase_main_fn_result"
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result";
+export SCRIPT_FILE="03_testcase_return_code.rs";
+export SCRIPT_DIR="examples/";
+# make dir if not available
+mkdir -p ./$SCRIPT_DIR;
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // First hint/approach
 //https://doc.rust-lang.org/std/process/struct.ExitCode.html
@@ -264,12 +277,11 @@ echo "";
 # DISABLE =>  because this testcase need keyboard input
 # echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-echo "";
 echo "ReturnCode => \$?"
 */
 
-/* run oncommand line
-cargo test --package \$SCRIPT_PACKAGE --example \$(echo \$FILE_NAME | cut -d . -f 1) --  --exact --show-output --nocapture
+/* run testcase from bash based command prompt
+cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -279,8 +291,11 @@ EoF
 
 ```rust
 #!/usr/bin/env bash
-export SCRIPT_FILE="04_testcase_main_run.rs"
-export SCRIPT_DIR="examples/"
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result";
+export SCRIPT_FILE="04_testcase_main_run.rs";
+export SCRIPT_DIR="examples/";
+# make dir if not available
+mkdir -p ./$SCRIPT_DIR;
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 // FROM HERE
 // https://raw.githubusercontent.com/assert-rs/assert_cmd/master/examples/example_fixture.rs
@@ -350,8 +365,11 @@ cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "run rust TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-echo "";
 echo "ReturnCode => \$?"
+*/
+
+/* run testcase from bash based command prompt
+cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
