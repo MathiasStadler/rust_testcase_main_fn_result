@@ -74,7 +74,8 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* run testcase from bash based command prompt
+/* 
+# run testcase from bash based command prompt
 cargo test --package "\$SCRIPT_PACKAGE" --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
@@ -280,7 +281,8 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* run testcase from bash based command prompt
+/* 
+# run testcase from bash based command prompt
 cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
@@ -368,12 +370,15 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* run testcase from bash based command prompt
+/*
+# run testcase from bash based command prompt
 cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
 ```
+
+## grep -r --include "*.sh" set "."
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
 
