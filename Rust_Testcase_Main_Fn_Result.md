@@ -405,6 +405,7 @@ println!("$SCRIPT_FILE");
 fn parse_data(input: i32) -> Result<i32, io::Error> {
     match input {
         0 => Ok(0),
+        1 => Ok(1),
         x => Err(io::Error::new(
             io::ErrorKind::InvalidData,
             format!("unexpected number {}", x),
@@ -413,10 +414,48 @@ fn parse_data(input: i32) -> Result<i32, io::Error> {
 }
 
 #[test]
-fn test_parsing_wrong_data() {
+fn test_parsing_wrong_data_result_success() {
+    let result = parse_data(0).map_err(|e| e.kind());
+    let expected = Ok(0);
+    assert_eq!(expected, result);
+    }
+
+#[test]
+fn test_parsing_wrong_data_result_is_ok() {
+    let result = parse_data(0).map_err(|e| e.kind());
+    // instead
+    //  let expected = Ok(0);
+    //  assert_eq!(expected, result)
+    // use that/this
+    // is valid for all successful testcase
+    assert!(result.is_ok());
+}
+
+#[test]
+fn test_parsing_wrong_data_2nd_result_is_ok() {
+    // change parse data
     let result = parse_data(1).map_err(|e| e.kind());
+    // instead
+    //  let expected = Ok(0);
+    //  assert_eq!(expected, result)
+    // use that/this
+    // is valid for all successful testcase
+    assert!(result.is_ok());
+}
+
+#[test]
+fn test_parsing_wrong_data_should_failures() {
+    let result = parse_data(-1).map_err(|e| e.kind());
     let expected = Err(io::ErrorKind::InvalidData);
     assert_eq!(expected, result);
+}
+
+#[test]
+fn test_parsing_wrong_data_is_err() {
+    let result = parse_data(-1).map_err(|e| e.kind());
+    // let expected = Err(io::ErrorKind::InvalidData);
+    // assert_eq!(expected, result);
+    assert!(result.is_err());
 }
 
 
@@ -430,6 +469,8 @@ cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo 
+\$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
