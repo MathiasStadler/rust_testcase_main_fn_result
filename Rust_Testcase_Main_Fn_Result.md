@@ -378,6 +378,43 @@ cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME
 EoF
 ```
 
+## testcase fn result
+
+- [FIRST HINT](https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/book/second-edition/ch11-01-writing-tests.html)
+- [SECOND HINT](https://stackoverflow.com/questions/57234140/how-to-assert-io-errors-in-rust)
+
+```rust
+#!/usr/bin/env bash
+export SCRIPT_PACKAGE="rust_testcase_main_fn_result";
+export SCRIPT_FILE="05_testcase_fn_result.rs";
+export SCRIPT_DIR="examples/";
+# make dir if not available
+mkdir -p ./$SCRIPT_DIR;
+cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
+
+
+fn main(){
+   
+println!("$SCRIPT_FILE");
+
+}//end of main
+
+/*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
+*/
+
+EoF
+```
+
 ## grep -r --include "*.sh" set "."
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
