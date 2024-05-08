@@ -309,6 +309,8 @@ use std::error::Error;
 use std::io;
 use std::io::Write;
 use std::process;
+#[allow(unused_imports)]
+use assert_cmd::Command;
 
 fn run() -> Result<(), Box<dyn Error>> {
     if let Ok(text) = env::var("stdout") {
@@ -432,8 +434,9 @@ fn test_parsing_wrong_data_result_is_ok() {
 }
 
 #[test]
-fn test_parsing_wrong_data_2nd_result_is_ok() {
-    // change parse data
+fn test_parsing_wrong_data_2nd_result_is_ok_ok() {
+    // change parse data input to 1
+    // otherwise identical testcase
     let result = parse_data(1).map_err(|e| e.kind());
     // instead
     //  let expected = Ok(0);
@@ -444,15 +447,36 @@ fn test_parsing_wrong_data_2nd_result_is_ok() {
 }
 
 #[test]
-fn test_parsing_wrong_data_should_failures() {
+fn test_parsing_wrong_data_2nd_result_is_ok_failed() {
+    // change parse data input to 1
+    // otherwise identical testcase
+    let result = parse_data(-1).map_err(|e| e.kind());
+    // instead
+    //  let expected = Ok(0);
+    //  assert_eq!(expected, result)
+    // use that/this
+    // is valid for all successful testcase
+    assert!(result.is_ok());
+}
+
+#[test]
+fn test_parsing_wrong_data_of_failures_give_ok() {
     let result = parse_data(-1).map_err(|e| e.kind());
     let expected = Err(io::ErrorKind::InvalidData);
     assert_eq!(expected, result);
 }
 
 #[test]
-fn test_parsing_wrong_data_is_err() {
+fn test_parsing_wrong_data_result_is_err_ok() {
     let result = parse_data(-1).map_err(|e| e.kind());
+    // let expected = Err(io::ErrorKind::InvalidData);
+    // assert_eq!(expected, result);
+    assert!(result.is_err());
+}
+
+#[test]
+fn test_parsing_wrong_data_result_is_err_failed() {
+    let result = parse_data(0).map_err(|e| e.kind());
     // let expected = Err(io::ErrorKind::InvalidData);
     // assert_eq!(expected, result);
     assert!(result.is_err());
@@ -469,7 +493,7 @@ cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo 
+cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo \
 \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
