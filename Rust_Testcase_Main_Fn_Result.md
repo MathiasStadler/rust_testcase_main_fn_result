@@ -391,13 +391,34 @@ export SCRIPT_DIR="examples/";
 # make dir if not available
 mkdir -p ./$SCRIPT_DIR;
 cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
-
+// FORM HERE
+// https://stackoverflow.com/questions/57234140/how-to-assert-io-errors-in-rust
+use std::io;
 
 fn main(){
    
 println!("$SCRIPT_FILE");
 
 }//end of main
+
+#[allow(dead_code)]
+fn parse_data(input: i32) -> Result<i32, io::Error> {
+    match input {
+        0 => Ok(0),
+        x => Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            format!("unexpected number {}", x),
+        )),
+    }
+}
+
+#[test]
+fn test_parsing_wrong_data() {
+    let result = parse_data(1).map_err(|e| e.kind());
+    let expected = Err(io::ErrorKind::InvalidData);
+    assert_eq!(expected, result);
+}
+
 
 /*
 export FILE_NAME=$SCRIPT_FILE
