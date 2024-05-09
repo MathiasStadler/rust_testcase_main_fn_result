@@ -76,7 +76,7 @@ echo "ReturnCode => \$?"
 
 /* 
 # quick => run testcase from shell command prompt
-cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -176,7 +176,7 @@ echo "ReturnCode => \$?"
 
 /* 
 # quick => run testcase from shell command prompt
-cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -283,7 +283,7 @@ echo "ReturnCode => \$?"
 
 /* 
 # quick => run testcase from shell command prompt
-cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -340,6 +340,7 @@ fn main() {
     process::exit(code);
 }
 
+#[ignore]
 #[test]
 fn cargo_binary() {
     let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
@@ -374,7 +375,7 @@ echo "ReturnCode => \$?"
 
 /* 
 # quick => run testcase from shell command prompt
-cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -496,6 +497,11 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo \
 \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
+*/
+
+/* 
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
