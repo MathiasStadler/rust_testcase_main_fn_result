@@ -75,8 +75,8 @@ echo "ReturnCode => \$?"
 */
 
 /* 
-# run testcase from bash based command prompt
-cargo test --package "\$SCRIPT_PACKAGE" --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -175,8 +175,8 @@ echo "ReturnCode => \$?"
 */
 
 /* 
-# run testcase from bash based command prompt
-cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -282,8 +282,8 @@ echo "ReturnCode => \$?"
 */
 
 /* 
-# run testcase from bash based command prompt
-cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
@@ -372,9 +372,9 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/*
-# run testcase from bash based command prompt
-cargo test --package rust_testcase_main_fn_result --example "\$(echo \$FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
+/* 
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $FILE_NAME | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
 EoF
