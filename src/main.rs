@@ -1,15 +1,12 @@
-use std::process::{ExitCode, Termination};
+use std::error::Error;
 
-pub enum LinuxExitCode { ExitOK, ExitERR(u8) }
-
-impl Termination for LinuxExitCode {
-   fn report(self) -> ExitCode {
-     match self {
-       LinuxExitCode::ExitOK => ExitCode::SUCCESS,
-       LinuxExitCode::ExitERR(v) => ExitCode::from(v)
-     }
-   }
+fn read_i32() -> Result<i32, Box<dyn Error>> {
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input)?;
+    let x = input.trim_end().parse::<i32>()?;
+    Ok(x)
 }
-fn main() -> LinuxExitCode {
-    LinuxExitCode::ExitERR(3)
+
+fn main() {
+    println!("{:?}", read_i32());
 }

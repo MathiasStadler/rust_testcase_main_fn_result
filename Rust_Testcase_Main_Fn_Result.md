@@ -1,4 +1,4 @@
-# Explore Rust TestCase for cli main function,  fn, strut and result
+# Explore Rust TestCase for cli main function, fn, strut and result
 
 <details>
 <summary>Usefully thing</summary>
@@ -16,7 +16,7 @@
 ## we use crate assert_cmd
 
 - we would to use [assert_cmd](https://crates.io/crates/assert_cmd)
--- modified this example - [first testcase](https://github.com/assert-rs/assert_cmd/blob/master/tests/cargo.rs)
+  -- modified this example - [first testcase](https://github.com/assert-rs/assert_cmd/blob/master/tests/cargo.rs)
 
 ### add assert_cmd crate to project
 
@@ -74,7 +74,7 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* 
+/*
 # quick => run testcase from shell command prompt
 cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
@@ -174,7 +174,7 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* 
+/*
 # quick => run testcase from shell command prompt
 cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
@@ -214,7 +214,7 @@ fn main(){
 
 println!("Hello example!");
 process::exit(0);
-    
+
 }
 
 #[test]
@@ -281,7 +281,7 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* 
+/*
 # quick => run testcase from shell command prompt
 cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
@@ -373,7 +373,7 @@ cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "ReturnCode => \$?"
 */
 
-/* 
+/*
 # quick => run testcase from shell command prompt
 cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
@@ -399,7 +399,7 @@ cat << EoF > ./$SCRIPT_DIR/$SCRIPT_FILE
 use std::io;
 
 fn main(){
-   
+
 println!("$SCRIPT_FILE");
 
 }//end of main
@@ -499,11 +499,62 @@ cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo \
 echo "ReturnCode => \$?"
 */
 
-/* 
+/*
 # quick => run testcase from shell command prompt
 cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
 */
 
+EoF
+```
+
+### 06_testcase_fn_result_error_handling_main_fn.rs
+
+````rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="06_divide_to_two_main_fn.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+// FORM HERE
+// https://stackoverflow.com/questions/57234140/how-to-assert-io-errors-in-rust
+// if let Ok ; if let Err(err);
+// https://rust-classes.com/chapter_3_3
+// next example
+// https://stackoverflow.com/questions/62375381/an-elegant-way-of-getting-resultt-e-based-on-result-e1-and-resultt-e2
+// 
+// https://stackoverflow.com/questions/67422765/how-can-i-generate-an-errorerror-instance 
+
+
+fn divide_to_two(n:i32) ->Result<i32, Box<dyn std::error::Error>> {
+let result = n/2;
+Ok(result)
+}
+
+fn main()-> Result<(), Box<dyn std::error::Error>> {
+
+println!("{:?}",divide_to_two(4));
+
+Ok(())
+}//end of main
+
+#[test]
+fn test_success(){
+
+
+}
+
+/*
+export FILE_NAME=$EXAMPLE_SCRIPT_FILE
+export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => $?"
+*/
 EoF
 ```
 
@@ -552,6 +603,6 @@ echo "ReturnCode => $?"
 */
 EoF
 
-```
+````
 
 [Markdown marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)
