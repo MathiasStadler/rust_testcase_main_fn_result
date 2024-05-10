@@ -342,7 +342,7 @@ fn main() {
 
 #[ignore]
 #[test]
-fn cargo_binary() {
+fn test_main_run() {
     let mut cmd = Command::cargo_bin("$(echo $SCRIPT_FILE | cut -d . -f 1)").unwrap();
     cmd.assert().success().stdout("Hello, world!\n");
 }
@@ -510,5 +510,48 @@ EoF
 ## grep -r --include "*.sh" set "."
 
 ## [next step](https://github.com/assert-rs/assert_cmd/blob/master/examples/example_fixture.rs)
+
+## LinuxExitCode
+
+```rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="98_linux_exit_code.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+// FROM HERE
+// https://stackoverflow.com/questions/24245276/why-does-rust-not-have-a-return-value-in-the-main-function-and-how-to-return-a
+use std::process::{ExitCode, Termination};
+
+pub enum LinuxExitCode { ExitOK, ExitERR(u8) }
+
+impl Termination for LinuxExitCode {
+   fn report(self) -> ExitCode {
+     match self {
+       LinuxExitCode::ExitOK => ExitCode::SUCCESS,
+       LinuxExitCode::ExitERR(v) => ExitCode::from(v)
+     }
+   }
+}
+fn main() -> LinuxExitCode {
+    LinuxExitCode::ExitERR(3)
+}
+
+
+/*
+export FILE_NAME=$EXAMPLE_SCRIPT_FILE
+export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => $?"
+*/
+EoF
+
+```
 
 [Markdown marker from here](https://github.com/MathiasStadler/repo_template/blob/main/includes/markdown_marker.md#to-highlight-a-note-and-warning-using-blockquote)

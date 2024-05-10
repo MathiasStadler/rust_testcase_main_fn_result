@@ -1,12 +1,15 @@
-// use std::io::stdin;
+use std::process::{ExitCode, Termination};
 
-fn main() {
-    let mut input = String::new();
-    match std::io::stdin().read_line(&mut input) {
-        Ok(n) => {
-            println!("{n} bytes read");
-            println!("{input}");
-        }
-        Err(error) => println!("error: {error}"),
-    }
+pub enum LinuxExitCode { ExitOK, ExitERR(u8) }
+
+impl Termination for LinuxExitCode {
+   fn report(self) -> ExitCode {
+     match self {
+       LinuxExitCode::ExitOK => ExitCode::SUCCESS,
+       LinuxExitCode::ExitERR(v) => ExitCode::from(v)
+     }
+   }
+}
+fn main() -> LinuxExitCode {
+    LinuxExitCode::ExitERR(3)
 }
