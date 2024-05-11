@@ -507,11 +507,124 @@ cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d .
 EoF
 ```
 
-### 06_testcase_fn_result_error_handling_main_fn.rs
+### 06_ok_testcase_most_simple_result_from_fn.rs
+
+```rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="06_ok_testcase_most_simple_result_from_fn.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+// FOUND HERE
+// https://stackoverflow.com/questions/45583246/rust-returns-a-result-error-from-fn-mismatched-types
+fn get_result() -> Result<String, String> {
+    Ok(String::from("foo")) // <- works fine
+    //Result::Err(String::from("Error"))
+ }
+ 
+ fn main(){
+     match get_result(){
+         Ok(s) => println!("{}",s),
+         Err(s) => println!("{}",s)
+     };
+ }
+
+// #[test]
+// fn test_get_result_success() {
+//     let result = get_result().map_err(|e| e.kind());
+//     let expected = Ok(0);
+//     assert_eq!(expected, result);
+//     }
+
+#[test]
+fn test_get_result_success() {
+    let result = get_result();
+    let expected = Ok("foo");
+    // What’s difference between as_deref() and * to a &variable?
+    // https://users.rust-lang.org/t/whats-difference-between-as-deref-and-to-a-variable/103692
+    assert_eq!(expected, result.as_deref());
+    }
+
+
+ /*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo \
+\$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
+*/
+
+/*
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
+*/
+
+EoF
+```
+
+### 06_err_testcase_most_simple_result_from_fn.rs
+
+```rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="06_err_testcase_most_simple_result_from_fn.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+// FOUND HERE
+// https://stackoverflow.com/questions/45583246/rust-returns-a-result-error-from-fn-mismatched-types
+fn get_result() -> Result<String, String> {
+    //Ok(String::from("foo")) // <- works fine
+    Result::Err(String::from("Error"))
+ }
+ 
+ fn main(){
+     match get_result(){
+         Ok(s) => println!("{}",s),
+         Err(s) => println!("{}",s)
+     };
+ }
+
+#[test]
+fn test_get_result_success() {
+    let result = get_result().map_err(|e| e.kind());
+    let expected = "Error";
+    assert_eq!(expected, result);
+    }
+
+
+ /*
+export FILE_NAME=$SCRIPT_FILE
+export FILE_DIR_NAME=$SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs $(grep -c ^processor /proc/cpuinfo) --example "\$(echo \
+\$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
+*/
+
+/*
+# quick => run testcase from shell command prompt
+cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d . -f 1)" --  --exact --show-output --nocapture
+*/
+
+EoF
+```
+
+### 07_testcase_fn_result_error_handling_main_fn.rs
 
 ````rust,no_run
 #!/usr/bin/env bash
-export EXAMPLE_SCRIPT_FILE="06_divide_to_two_main_fn.rs"
+export EXAMPLE_SCRIPT_FILE="07_divide_to_two_main_fn.rs"
 export EXAMPLE_SCRIPT_DIR="examples/"
 cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
 // FORM HERE
