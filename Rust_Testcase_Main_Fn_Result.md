@@ -516,35 +516,29 @@ export EXAMPLE_SCRIPT_DIR="examples/"
 cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
 // FOUND HERE
 // https://stackoverflow.com/questions/45583246/rust-returns-a-result-error-from-fn-mismatched-types
-fn get_result() -> Result<String, String> {
+fn get_result_success() -> Result<String, String> {
     Ok(String::from("foo")) // <- works fine
     //Result::Err(String::from("Error"))
  }
  
  fn main(){
-     match get_result(){
+     match get_result_success(){
          Ok(s) => println!("{}",s),
          Err(s) => println!("{}",s)
      };
  }
 
-// #[test]
-// fn test_get_result_success() {
-//     let result = get_result().map_err(|e| e.kind());
-//     let expected = Ok(0);
-//     assert_eq!(expected, result);
-//     }
-
 #[test]
 fn test_get_result_success() {
-    let result = get_result();
+    let result = get_result_success();
     let expected = Ok("foo");
     // What’s difference between as_deref() and * to a &variable?
-    // https://users.rust-lang.org/t/whats-difference-between-as-deref-and-to-a-variable/103692
+    // https://users.rust-lang.org/t/whats-difference-between-as-deref-and-to-a-variable/103692/2
     assert_eq!(expected, result.as_deref());
     }
 
 
+ 
  /*
 export FILE_NAME=$SCRIPT_FILE
 export FILE_DIR_NAME=$SCRIPT_DIR
@@ -577,26 +571,32 @@ export EXAMPLE_SCRIPT_DIR="examples/"
 cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
 // FOUND HERE
 // https://stackoverflow.com/questions/45583246/rust-returns-a-result-error-from-fn-mismatched-types
-fn get_result() -> Result<String, String> {
-    //Ok(String::from("foo")) // <- works fine
+fn get_result_error() -> Result<String, String> {
+    // Ok(String::from("foo")) // <- works fine
     Result::Err(String::from("Error"))
  }
  
  fn main(){
-     match get_result(){
+     match get_result_error(){
          Ok(s) => println!("{}",s),
          Err(s) => println!("{}",s)
      };
  }
 
 #[test]
-fn test_get_result_success() {
-    let result = get_result().map_err(|e| e.kind());
-    let expected = "Error";
-    assert_eq!(expected, result);
+fn test_get_result_error() {
+    let result = get_result_error();
+    // let expected = Ok("foo");
+    // let expected:&&'static str = &"Error";
+    // let should:&&'static str = &"Error";
+    // What’s difference between as_deref() and * to a &variable?
+    // https://users.rust-lang.org/t/whats-difference-between-as-deref-and-to-a-variable/103692/2
+    // assert_eq!(expected, result.as_deref());
+    assert!(result.is_err());
     }
 
 
+ 
  /*
 export FILE_NAME=$SCRIPT_FILE
 export FILE_DIR_NAME=$SCRIPT_DIR
