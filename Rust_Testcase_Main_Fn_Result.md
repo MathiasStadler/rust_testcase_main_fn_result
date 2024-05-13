@@ -620,11 +620,98 @@ cargo test --package "$SCRIPT_PACKAGE" --example "$(echo $SCRIPT_FILE | cut -d .
 EoF
 ```
 
-### 07_testcase_fn_result_error_handling_main_fn.rs
+### std::result
+
+[FROM HERE](https://doc.rust-lang.org/std/result/)
+
+[no_run](https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html#attributes)
+
+```rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="07_rust_std_result.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+//FROM HERE
+//https://doc.rust-lang.org/std/result/
+
+#[derive(Debug)]
+enum Version { Version1, Version2 }
+
+fn parse_version(header: &[u8]) -> Result<Version, &'static str> {
+    match header.get(0) {
+        None => Err("invalid header length"),
+        Some(&1) => Ok(Version::Version1),
+        Some(&2) => Ok(Version::Version2),
+        Some(_) => Err("invalid version"),
+    }
+}
+
+pub fn main(){
+    let version = parse_version(&[1, 2, 3, 4]);
+    match version {
+        Ok(v) => println!("working with version: {v:?}"),
+        Err(e) => println!("error parsing header: {e:?}"),
+    }
+    
+}
+
+/*
+export FILE_NAME=$EXAMPLE_SCRIPT_FILE
+export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => $?"
+*/
+EoF
+
+```
+
+### rust result is_ok
+
+```rust,no_run
+#!/usr/bin/env bash
+export EXAMPLE_SCRIPT_FILE="08_rust_result_is_ok.rs"
+export EXAMPLE_SCRIPT_DIR="examples/"
+cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
+//FROM HERE
+// https://doc.rust-lang.org/beta/src/core/result.rs.html
+pub fn main(){
+
+     let x: Result<i32, &str> = Ok(-3);
+     assert_eq!(x.is_ok(), true);
+    
+     let x: Result<i32, &str> = Err("Some error message");
+     assert_eq!(x.is_ok(), false);
+}
+
+/*
+export FILE_NAME=$EXAMPLE_SCRIPT_FILE
+export FILE_DIR_NAME=$EXAMPLE_SCRIPT_DIR
+echo "build prg => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo build --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "run PRG => \$(echo \$FILE_NAME | cut -d . -f 1)";
+cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "";
+echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
+cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+# cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
+*/
+EoF
+
+```
+
+### XX_testcase_fn_result_error_handling_main_fn.rs
 
 ````rust,no_run
 #!/usr/bin/env bash
-export EXAMPLE_SCRIPT_FILE="07_divide_to_two_main_fn.rs"
+export EXAMPLE_SCRIPT_FILE="XX_divide_to_two_main_fn.rs"
 export EXAMPLE_SCRIPT_DIR="examples/"
 cat << EoF > ./$EXAMPLE_SCRIPT_DIR/$EXAMPLE_SCRIPT_FILE
 // FORM HERE
@@ -665,8 +752,8 @@ cargo run --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
 echo "";
 echo "run TEST => \$(echo \$FILE_NAME | cut -d . -f 1)"
 cargo test --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
-echo "ReturnCode => $?"
+# cargo test --jobs 4 --example "\$(echo \$FILE_NAME | cut -d . -f 1)"
+echo "ReturnCode => \$?"
 */
 EoF
 ```
